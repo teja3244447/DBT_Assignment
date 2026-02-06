@@ -102,8 +102,11 @@ merged_inner["LOAD_TIMESTAMP"]=pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
 
+# Age calculation
+today = pd.Timestamp.today().normalize()
+merged_inner["age"] = (today - merged_inner["dob"]).dt.days // 365
 
-##age above 18##
+# Age filter
 merged_inner = merged_inner[merged_inner["age"] > 18]
 
 merged_inner = merged_inner.reset_index(drop=True)
@@ -120,3 +123,4 @@ if success:
     print(f"Successfully loaded  FINAL DATA into the table.")
 else:
     print("Data loading failed.")
+
