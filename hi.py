@@ -55,7 +55,7 @@ def parse_dob(x):
     # Other formats (DD-MM-YYYY, Month DD, YYYY)
     return pd.to_datetime(x,dayfirst=True)
 
-df["dob"] = df["dob"].apply(parse_dob).dt.strftime("%d-%m-%Y")
+df["dob"] = pd.to_datetime(df["dob"].map(parse_dob)).dt.strftime("%d-%m-%Y")
 df["LOAD_TIMESTAMP"] = pd.Timestamp.now().strftime("%Y-%m-%d %H:%M:%S")
 
 
@@ -94,7 +94,7 @@ merged_inner["gender"]=(merged_inner["gender"]
 
 
 ## DOB normalization ###
-merged_inner["dob"]=merged_inner["dob"].apply(parse_dob).dt.strftime("%d-%m-%Y")
+df["dob"] = pd.to_datetime(df["dob"].map(parse_dob)).dt.strftime("%d-%m-%Y")
 
 
 ##current execution time ###
@@ -117,5 +117,6 @@ if success:
     print(f"Successfully loaded  FINAL DATA into the table.")
 else:
     print("Data loading failed.")
+
 
 
